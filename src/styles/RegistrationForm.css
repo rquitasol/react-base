@@ -1,0 +1,41 @@
+body.active-modal {
+  overflow-y: hidden;
+}
+
+.registration-modal,
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+}
+
+.overlay {
+  background: rgba(42, 54, 54, 0.8);
+}
+
+.modal-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background-color: #282c34;
+  max-width: 23rem;
+  padding: 0%;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 7px;
+}
+
+.modal-header {
+  padding-top: 1rem;
+  padding-left: 1rem;
+}

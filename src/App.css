@@ -6,3 +6,12 @@
     transform: rotate(360deg);
   }
 }
+
+.logo {
+  border-radius: 30px;
+  display: flex;
+  max-width: 10%;
+  max-height: 10%;
+  width: 5rem;
+  margin-right: 1rem;
+}
