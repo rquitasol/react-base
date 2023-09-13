@@ -4,7 +4,8 @@ Web app built using React with DaisyUi, Tailwind CSS.
 
 ## Features
 
-- To follow
+- User Login
+- User Registration
 
 ## Live Demo
 
