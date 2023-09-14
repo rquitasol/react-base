@@ -1,28 +1,31 @@
+import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
-import MainPage from "./pages/MainPage";
+import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
-import UserRoute from "./context/UserRoute";
+import ProtectedRoute from "./context/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
-    <div className="App">
+    <AuthProvider>
       <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route
-            path="/dashboard"
-            element={<UserRoute element={<Dashboard />} />}
-          />
-          <Route path="/notfound" element={<NotFoundPage />} />
-        </Routes>
-        <Footer />
+        <Fragment>
+          <Header />
+          <Routes>
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/notfound" element={<NotFoundPage />} />
+            <Route path="/" element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+          </Routes>
+        </Fragment>
       </Router>
-    </div>
+      <Footer />
+    </AuthProvider>
   );
 }
 

@@ -4,7 +4,7 @@ import pfp from "../../assets/temp-pfp.jpg";
 import { useAuth } from "../../context/AuthContext";
 
 const Header = () => {
-  const { user, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   const alt = "Put your logo here!";
 
   const handleLogoutOnClick = () => {
@@ -12,12 +12,12 @@ const Header = () => {
   };
 
   const getProfileInfo = () => {
-    if (user) {
+    if (isAuthenticated) {
       return (
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src={pfp} />
+              <img src={pfp} alt={alt} />
             </div>
           </label>
           <ul
