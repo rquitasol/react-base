@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import RegistrationForm from "../components/RegistrationForm";
+import useAlert from "../hooks/useAlert";
 
 const RegistrationContainer = ({ isModalOpen, setIsModalOpen }) => {
   const [formData, setFormData] = useState({
@@ -7,28 +8,11 @@ const RegistrationContainer = ({ isModalOpen, setIsModalOpen }) => {
     email: "",
     password: "",
   });
-  const [showAlert, setShowAlert] = useState({
-    isDisplayed: false,
-    message: "",
-    type: "",
-  });
-
-  useEffect(() => {
-    if (showAlert) {
-      setTimeout(() => {
-        setShowAlert({
-          isDisplayed: false,
-          message: "",
-          type: "",
-        });
-      }, 7000);
-    }
-  }, [showAlert]);
+  const [showAlert, hideAlert, alertData] = useAlert();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    console.log(formData);
   };
 
   const handleRegisterSubmit = (e) => {
@@ -39,16 +23,13 @@ const RegistrationContainer = ({ isModalOpen, setIsModalOpen }) => {
         //execute api registration here
         //await register(name, email, password)
         //If successfull alert and redirect
-        setAlertMessage(
-          `Registration for user ${formData.name} success!`,
-          "success"
-        );
+        showAlert(`Registration for user ${formData.name} success!`, "success");
 
         setTimeout(() => {
           closeModal();
         }, 5000);
       } catch (err) {
-        setAlertMessage(err.mesage, "error");
+        showAlert(err.mesage, "error");
       } finally {
         setFormData({
           name: "",
@@ -63,21 +44,13 @@ const RegistrationContainer = ({ isModalOpen, setIsModalOpen }) => {
     setIsModalOpen(false);
   };
 
-  const setAlertMessage = (message, type) => {
-    setShowAlert({
-      isDisplayed: true,
-      message: message,
-      type: `alert-${type}`,
-    });
-  };
-
   const isValidEmailAndPassword = () => {
     const name = formData?.name;
     const email = formData?.email;
     const password = formData?.password;
 
     if (name.length <= 0 || email.length <= 0 || password.length <= 0) {
-      setAlertMessage("Please fill in all data!", "warning");
+      showAlert("Please fill in all data!", "warning");
       return false;
     }
 
@@ -86,12 +59,12 @@ const RegistrationContainer = ({ isModalOpen, setIsModalOpen }) => {
 
     const isValidEmail = emailPattern.test(email);
     if (!isValidEmail) {
-      setAlertMessage("Invalid email address!", "warning");
+      showAlert("Invalid email address!", "warning");
       return false;
     }
     const isValidPassword = passwordPattern.test(password);
     if (!isValidPassword) {
-      setAlertMessage(
+      showAlert(
         "Password must be atleast 8 characters and contain atleast one digt, lowercase and uppercase letter!",
         "warning"
       );
@@ -106,7 +79,7 @@ const RegistrationContainer = ({ isModalOpen, setIsModalOpen }) => {
       onSubmit={handleRegisterSubmit}
       onChange={handleInputChange}
       formData={formData}
-      showAlert={showAlert}
+      alertData={alertData}
       isModalOpen={isModalOpen}
       closeModal={closeModal}
     />

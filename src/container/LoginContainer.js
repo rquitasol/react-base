@@ -1,27 +1,13 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import LoginForm from "../components/LoginForm";
 import RegistrationContainer from "./RegistrationContainer";
+import useAlert from "../hooks/useAlert";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [showAlert, setShowAlert] = useState({
-    isDisplayed: false,
-    message: "",
-    type: "",
-  });
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    if (showAlert) {
-      setTimeout(() => {
-        setShowAlert({
-          isDisplayed: false,
-          message: "",
-          type: "",
-        });
-      }, 7000);
-    }
-  }, [showAlert]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showAlert, closeAlert, alertData] = useAlert();
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +17,7 @@ const Login = () => {
     try {
       const isValidLogin =
         email.length <= 0 || password.length <= 0
-          ? setAlertMessage("Please fill in all data!", "warning")
+          ? showAlert("Please fill in all data!", "warning")
           : true;
 
       if (isValidLogin) {
@@ -43,10 +29,10 @@ const Login = () => {
         //execute api login here
         //await Login(username, password)
         //If successfull alert and redirect
-        setAlertMessage(`Login for user ${email} success!`, "success");
+        showAlert(`Login for user ${email} success!`, "success");
       }
     } catch (err) {
-      setAlertMessage(err.message, "alert-error");
+      showAlert(err.message, "error");
     } finally {
       setFormData({ email: "", password: "" });
     }
@@ -55,14 +41,6 @@ const Login = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
-
-  const setAlertMessage = (message, type) => {
-    setShowAlert({
-      isDisplayed: true,
-      message: message,
-      type: `alert-${type}`,
-    });
   };
 
   const redirecRegistrationForm = () => {
@@ -76,6 +54,8 @@ const Login = () => {
         onChange={handleInputChange}
         formData={formData}
         showAlert={showAlert}
+        alertData={alertData}
+        closeAlert={closeAlert}
         redirecRegistrationForm={redirecRegistrationForm}
       />
 
