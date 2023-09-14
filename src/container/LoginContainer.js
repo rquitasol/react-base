@@ -2,12 +2,16 @@ import { React, useState } from "react";
 import LoginForm from "../components/LoginForm";
 import RegistrationContainer from "./RegistrationContainer";
 import useAlert from "../hooks/useAlert";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const LoginContainer = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showAlert, closeAlert, alertData] = useAlert();
+  const [showAlert, hideAlert, alertData] = useAlert();
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -22,14 +26,24 @@ const Login = () => {
 
       if (isValidLogin) {
         //Test user login error remove if already functional
-        if (email === "error") {
+        if (!email === "Admin") {
           throw new Error("Invalid user!");
         }
 
         //execute api login here
         //await Login(username, password)
         //If successfull alert and redirect
-        showAlert(`Login for user ${email} success!`, "success");
+        if (isValidLogin) {
+          if (login({ email: email, role: "user" })) {
+            showAlert(`Login for user ${email} success!`, "success");
+
+            setTimeout(() => {
+              navigate("/dashboard");
+            }, 2000);
+          } else {
+            throw new Error("Invalid user!");
+          }
+        }
       }
     } catch (err) {
       showAlert(err.message, "error");
@@ -55,7 +69,7 @@ const Login = () => {
         formData={formData}
         showAlert={showAlert}
         alertData={alertData}
-        closeAlert={closeAlert}
+        hideAlert={hideAlert}
         redirecRegistrationForm={redirecRegistrationForm}
       />
 
@@ -67,4 +81,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginContainer;
