@@ -80,6 +80,7 @@ const RegistrationContainer = ({ isModalOpen, setIsModalOpen }) => {
       onChange={handleInputChange}
       formData={formData}
       alertData={alertData}
+      hideAlert={hideAlert}
       isModalOpen={isModalOpen}
       closeModal={closeModal}
     />
