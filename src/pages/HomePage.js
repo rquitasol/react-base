@@ -1,7 +1,7 @@
 import React from "react";
 import Login from "../container/LoginContainer";
 
-const MainPage = () => {
+const HomePage = () => {
   return (
     <div>
       <div className="hero min-h-screen bg-base-200">
@@ -21,4 +21,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default HomePage;
