@@ -6,7 +6,7 @@ const RegistrationForm = ({
   isModalOpen = false,
   onChange,
   onSubmit,
-  showAlert,
+  alertData,
   closeModal,
   formData,
 }) => {
@@ -28,11 +28,13 @@ const RegistrationForm = ({
                   x
                 </button>
               </div>
-              {showAlert?.isDisplayed && (
-                <Alert message={showAlert?.message} type={showAlert?.type} />
-              )}
               <div className="card-body">
                 <div className="form-control w-full max-w-xs">
+                  <Alert
+                    message={alertData.message}
+                    type={alertData.type}
+                    isDisplayed={alertData.isDisplayed}
+                  />
                   <form onSubmit={onSubmit}>
                     <div className="form-control">
                       <label className="label" htmlFor="name">

@@ -5,14 +5,16 @@ const LoginForm = ({
   onSubmit,
   onChange,
   formData,
-  showAlert,
+  alertData,
   redirecRegistrationForm,
 }) => {
   return (
     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-      {showAlert.isDisplayed && (
-        <Alert message={showAlert?.message} type={showAlert?.type} />
-      )}
+      <Alert
+        message={alertData.message}
+        type={alertData.type}
+        isDisplayed={alertData.isDisplayed}
+      />
       <div className="card-body">
         <form onSubmit={onSubmit}>
           <div className="form-control">
