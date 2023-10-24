@@ -9,8 +9,6 @@ Web app built using React with DaisyUi, Tailwind CSS.
 
 ## Live Demo
 
-You can check out the live demo of the Todo List web app here.
-
 ## Screenshots
 
 ## Technologies Used
